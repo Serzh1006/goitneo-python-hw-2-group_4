@@ -1,35 +1,41 @@
+def input_error(func):
+    def inner(*args,**kwargs):
+        try:
+            return func(*args,**kwargs)
+        except ValueError:
+            return "Give me name and phone please."
+        except KeyError:
+            return "Key error. The contact not found."
+        except IndexError:
+            return "Index error. Try again."
+    return inner
+
+
+@input_error
 def add_contact(args,contacts):
-    try:
         name,phone = args
         contacts[name.lower()] = phone
         return "Contact added."
-    except ValueError:
-        return 'ValueError: not enough values to unpack (expected 2, got 0)'
 
-
+@input_error
 def change_contact(args,contacts):
-    try:
         name,phone = args
         for key in contacts:
             if key==name.lower():
                 contacts[key] = phone
                 return "Contact updated."
             else:continue
-    except ValueError:
-        return 'ValueError: not enough values to unpack (expected 2, got 0)'
-    return 'Name is not found!'
+        return contacts[name]
 
+@input_error
 def show_phone(args,contacts):
-    try:
         name = args
         name = ("".join(name)).lower()
         for key in contacts:
             if key==name:
                 return contacts[key]
             else: continue
-    except ValueError:
-        return 'ValueError: not enough values to unpack (expected 2, got 0)'
-    return 'Name is not found!'
+        return contacts[name]
 
 
 def show_all(contacts):
