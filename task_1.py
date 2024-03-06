@@ -25,16 +25,16 @@ class Record:
         phone = Phone(new_phone)
         self.phones.append(phone.value)
 
-    def remove_phone():
-        pass
-
+    def remove_phone(self,phone):
+        self.phones.remove(phone)
 
     def edit_phone(self,old,new):
         index = self.phones.index(old)
         self.phones[index] = new
 
-    def find_phone():
-        pass
+    def find_phone(self,phone):
+        index = self.phones.index(phone)
+        return self.phones[index]
 
     def __str__(self):
         return f"Contact name: {self.name.value}, phones: {'; '.join(p for p in self.phones)}"
@@ -48,18 +48,3 @@ class AddressBook(UserDict):
 
     def delete(self,name):
         self.data.pop(name)
-
-john_record = Record('John')
-book = AddressBook()
-alina_record = Record('Alina')
-john_record.add_phone('733101770')
-john_record.add_phone('1234567890')
-alina_record.add_phone('794325346')
-book.add_record(john_record)
-book.add_record(alina_record)
-
-john = book.find('John')
-john.edit_phone('733101770','101010101010')
-book.delete('John')
-book.delete('Alina')
-print(book.data)
