@@ -14,6 +14,12 @@ class Name(Field):
 class Phone(Field):
     def __init__(self, value):
         super().__init__(value)
+    
+    def validate_phone(self):
+        if len(self.value) < 10:
+            print('Phone must be 10 digits')
+            return None
+        else: return self.value
 
 
 class Record:
@@ -23,7 +29,9 @@ class Record:
 
     def add_phone(self,new_phone):
         phone = Phone(new_phone)
-        self.phones.append(phone.value)
+        phone = phone.validate_phone()
+        if phone!=None:
+            self.phones.append(phone)
 
     def remove_phone(self,phone):
         self.phones.remove(phone)
